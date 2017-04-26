@@ -1,0 +1,29 @@
+version: '2'
+services:
+    db:
+        restart: always
+        image: "mysql:latest"
+        ports:
+            - "3306:3306"
+        volumes:
+            - mysql-db-volume:/var/lib/mysql
+        env_file:
+            - .env
+    api:
+        user: "node"
+        image: "capital-sante/backend-api"
+        build:
+            context: ./
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./:/app
+        command: 'gulp watchAndServe'
+        env_file:
+            - .env
+        depends_on:
+            - db
+        links:
+            - db
+volumes:
+    mysql-db-volume:
