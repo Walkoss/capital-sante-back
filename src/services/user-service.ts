@@ -42,6 +42,18 @@ export class UserService {
             });
         });
     }
+
+    getUsers(): Promise<Array<UserInstance>> {
+        return new Promise<Array<UserInstance>>((resolve: Function, reject: Function) => {
+            sequelize.transaction((t: Transaction) => {
+                return models.User.findAll().then((users: Array<UserInstance>) => {
+                    resolve(users);
+                }).catch((error: Error) => {
+                    reject(error);
+                });
+            });
+        });
+    }
 }
 
 export const userService = new UserService();

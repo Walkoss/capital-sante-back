@@ -1,7 +1,8 @@
 import {Router} from 'express';
-import {createUser} from '../controllers/user';
+import {createUser, getUsers} from '../controllers/user';
 import * as joi from 'joi';
 import * as validate from 'express-validation';
+import * as passport from 'passport';
 
 const validations = {
     createUser: {
@@ -17,6 +18,7 @@ const validations = {
 let router = Router();
 
 router.route('/users')
-    .post(validate(validations.createUser), createUser);
+    .post(validate(validations.createUser), createUser)
+    .get(passport.authenticate('jwt', {session: false}), getUsers);
 
 export = router;

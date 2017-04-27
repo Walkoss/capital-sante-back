@@ -59,9 +59,12 @@ class App {
             secretOrKey: this.app.get('secret')
         };
         const jwtStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
-            userService.findUser(payload._id).then((user: UserInstance) => {
+            userService.findUser(payload.id).then((user: UserInstance) => {
                 if (!user) return done(null, false);
-                return done(null, user);
+                return done(null, {
+                    id: user.dataValues.id,
+                    email: user.dataValues.email
+                });
             }).catch((err: Error) => {
                 return done(err, false);
             });
