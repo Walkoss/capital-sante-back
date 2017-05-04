@@ -20,7 +20,7 @@ export default function (sequelize: Sequelize, dataTypes: DataTypes): SequelizeS
             }
         },
         notificationId: {
-            type: dataTypes.INTEGER,
+            type: dataTypes.BIGINT,
             allowNull: false
         }
     }, {
