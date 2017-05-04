@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import {userService} from '../services/user-service';
+import {userService} from '../services/user/user-service';
 import * as httpStatus from 'http-status';
 import * as jwt from 'jsonwebtoken';
 import {config} from '../config/config';

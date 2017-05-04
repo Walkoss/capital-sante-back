@@ -2,6 +2,7 @@ import * as SequelizeStatic from 'sequelize';
 import {DataTypes, Sequelize} from 'sequelize';
 import {UserAttributes, UserInstance} from './interfaces/user';
 import * as bcrypt from 'bcrypt';
+import {SequelizeModels} from "./index";
 
 export default function (sequelize: Sequelize, dataTypes: DataTypes): SequelizeStatic.Model<UserInstance, UserAttributes> {
     let User = sequelize.define<UserInstance, UserAttributes>('User', {
@@ -48,6 +49,13 @@ export default function (sequelize: Sequelize, dataTypes: DataTypes): SequelizeS
                     cb(null, isMatch);
                 });
             }
+        },
+        classMethods: {
+            associate: (models: SequelizeModels) => {
+                User.belongsToMany(models.Doctor, {through: 'UserDoctors'});
+                User.belongsToMany(models.Document, {through: 'UserDocuments'});
+                User.belongsToMany(models.Appointment, {through: 'UserAppointments'});
+            }
         }
     });
 
@@ -78,11 +86,3 @@ export default function (sequelize: Sequelize, dataTypes: DataTypes): SequelizeS
 
     return User;
 }
-
-// , {
-//     classMethods: {
-//         associate: (models: SequelizeModels) => {
-//             User.belongsTo(models.Site);
-//         }
-//     }
-// }

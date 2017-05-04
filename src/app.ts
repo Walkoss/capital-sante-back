@@ -6,8 +6,8 @@ import * as debug from 'debug';
 import * as getRoutes from 'require-dir';
 import * as cors from 'cors';
 import * as passport from 'passport';
+import * as path from 'path';
 import {ExtractJwt, Strategy as JwtStrategy, StrategyOptions as JwtStrategyOptions} from 'passport-jwt';
-import {Strategy as LocalStrategy} from 'passport-local';
 
 // Error handler service
 import {
@@ -21,7 +21,7 @@ import {config} from './config/config';
 // Load models
 import {sequelize} from './models';
 import {IStrategyOptions} from 'passport-local';
-import {userService} from './services/user-service';
+import {userService} from './services/user/user-service';
 import {UserInstance} from './models/interfaces/user';
 
 class App {
@@ -52,6 +52,9 @@ class App {
         // Used to extract body from request
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({extended: false}));
+
+        // Serve public files
+        this.app.use(express.static(path.join(__dirname, 'public')));
 
         // Used to secure API
         const jwtOptions: JwtStrategyOptions = {

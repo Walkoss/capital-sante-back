@@ -1,5 +1,5 @@
-import {models, sequelize} from '../models/index';
-import {UserAttributes, UserInstance} from '../models/interfaces/user';
+import {models, sequelize} from '../../models/index';
+import {UserAttributes, UserInstance} from '../../models/interfaces/user';
 import {Transaction} from 'sequelize';
 
 export class UserService {

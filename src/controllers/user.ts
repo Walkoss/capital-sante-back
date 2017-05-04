@@ -1,8 +1,6 @@
 import {Request, Response} from 'express';
-
-import {userService} from '../services/user-service';
+import {userService} from '../services/user/user-service';
 import {UserInstance} from '../models/interfaces/user';
-
 import * as httpStatus from 'http-status';
 
 namespace UserController {
@@ -23,7 +21,6 @@ namespace UserController {
 
     export async function getUsers(req: Request, res: Response, next: Function) {
         try {
-            console.log(req.user);
             let users: UserInstance[] = await userService.getUsers();
             return res.json(users);
         } catch (error) {
